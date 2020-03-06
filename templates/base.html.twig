@@ -12,35 +12,35 @@
 
 		{% block navbar %}
 
+		{#Navbar#}
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
 
-				<a class="navbar-brand" href="#">
+				<a class="navbar-brand" href="/accueil">
                     <img src="/images/logo.jpg"/>
                 </a>
 
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link" href="#">Réunion</a>
+						<a class="nav-link" href="/reunion">Réunion</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Participants</a>
+						<a class="nav-link" href="/participant">Participants</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Statistiques</a>
-					</li>
-
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-							Dropdown link
-						</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Link 1</a>
-							<a class="dropdown-item" href="#">Link 2</a>
-							<a class="dropdown-item" href="#">Link 3</a>
-						</div>
+						<a class="nav-link" href="/rapport">Rapports</a>
 					</li>
 				</ul>
 			</nav>
+
+		{#Header#}
+			<div class="jumbotron jumbotron-fluid bg-secondary text-white">
+				<div class="container">
+					<h1 class="display-2">Meeting Management</h1>
+					<p class="lead">
+						<h5>Mieux gérer les présences aux réunions</h5>
+					</p>
+				</div>
+			</div>
 
 		{% endblock %}
 
@@ -54,6 +54,11 @@
 		{% block body %}{% endblock %}
 		{% block javascripts %}
 			<script src="/js/bootstrap.bundle.js"></script>
+			<script src="/js/bootstrap.min.js"></script>
+			<script src="/js/bootstrap.js"></script>
+			<script src="/js/bootstrap.bundle.min.js"></script>
+
+
 		{% endblock %}
 	</body>
 </html>

@@ -8,13 +8,50 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{#Container#}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/PROJETS/OTR/Meeting/Meeting_management/src/Controller/AccueilController.php'|file_link(0) }}">src/Controller/AccueilController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/PROJETS/OTR/Meeting/Meeting_management/templates/accueil/index.html.twig'|file_link(0) }}">templates/accueil/index.html.twig</a></code></li>
-    </ul>
+<div class="container">
+
+<div class="row"></div>
+    <div class="row">
+            <h4>Les fonctionnalités suivantes vous sont proposées : </br></h4></br>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <a href="/reunion"><img src="/images/photo.jpg" class="card-img-top" alt="..."></a>
+                    <div class="card-body">
+                        <h3 class="card-title">Gérer les réunions</h3>
+                        <p class="card-text">Vous avez la possibilité d'organier des réunions, les modifier ou les annuler</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <a href="/participant"><img src="/images/participant.jpg" class="card-img-top" alt="..."></a>
+                    <div class="card-body">
+                        <h3 class="card-title">Gérer les participants</h3>
+                        <p class="card-text">Vous pouvez choisir ceux qui participent à une réunion donnée</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <a href="/rapport"><img src="/images/Capture2.PNG" class="card-img-top" alt="..."></a>
+                    <div class="card-body">
+                        <h3 class="card-title">Avoir les rapports</h3>
+                        <p class="card-text">Vous pouvez vérifier les présences aux réunions, les différentes réunions organisées sur une période donnée, avoir les rapports</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+    
+    </div>
+
 </div>
+
+
 {% endblock %}
