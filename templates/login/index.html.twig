@@ -1,82 +1,61 @@
-{#}% extends 'base.html.twig' %}#}
-
-{#{% block title %}Login{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    <link rel="stylesheet" href='/css/bootstrap.css'/>
-
-</style>
-
-{% endblock %}#}
-
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Login
-			{% endblock %}
+			Login
 		</title>
 		{% block stylesheets %}
 			<link rel="stylesheet" href='/css/bootstrap.css'/>
 		{% endblock %}
-
-		{% block navbar %}
-
-            <div class="container-fluid full-width" style="">
-                </br><h1 class="text-center text-success">Bienvenue sur Meeting Management !</h1></br>
-                <h4 class="text-center">Veuillez vous connecter</h4><hr></br>
-                <div class="row">
-                <div class="col-md-4"></div>
-                    <div class="card col-md-4" style="">
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Email ou identifiant
-                                    </label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@email.tg">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Mot de passe
-                                    </label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1">
-                                </div>
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label>
-                                </div>
-                                <div class="form-group">
-                                <a href="/register">
-                                    <button class="btn btn-primary">Je n'ai pas de compte</button>
-                                </a>
-
-                                    <button type="submit" class="btn btn-success">Se connecter</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                <div class="col-md-4"></div>
-                </div>
-            </div>
-
-
-		{% endblock %}
-
-		{% block carousel %}{% endblock %}
-
 	</head>
 	<body>
-		{% block body %}{% endblock %}
-		{% block javascripts %}
-			<script src="/js/bootstrap.bundle.js"></script>
-			<script src="/js/bootstrap.min.js"></script>
-			<script src="/js/bootstrap.js"></script>
-			<script src="/js/bootstrap.bundle.min.js"></script>
+		<div class="container-fluid full-width" style=""><br/>
+			<h1 class="text-center text-success">Bienvenue sur Meeting Management !</h1>
 
-		{% endblock %}
+			<br>
+			<h4 class="text-center">Veuillez vous connecter</h4><hr/><br>
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="card col-md-4" style="">
+					<div class="card-body">
+						<form method="POST">
+							{% if error %}
+								<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+							{% endif %}
+							<div class="form-group">
+								<label for="exampleInputEmail1">Email
+								</label>
+								<input name="email" type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="email@email.tg" value="{{ last_username }}">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Mot de passe
+								</label>
+								<input type="password" class="form-control" id="exampleInputPassword1" name="password">
+							</div>
+							<div class="form-group form-check">
+								<input type="checkbox" class="form-check-input" id="exampleCheck1">
+								<label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label>
+							</div>
+							<div class="form-group">
+								<a href="/register">
+									<button class="btn btn-primary">Je n'ai pas de compte</button>
+								</a>
+								<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+								<button type="submit" class="btn btn-success">Se connecter</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+		</div>
 	</body>
 </html>
-
+{% block javascripts %}
+	<script src="/js/bootstrap.bundle.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap.js"></script>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

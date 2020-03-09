@@ -1,32 +1,106 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RapportController!{% endblock %}
+{% block title %}Hello RapportController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-{#Container#}
-    <div class="container-fluid">
-        {#First Row#}
-        <div class="row">
-            <div class="text-center col md-4 sm-3">
-                <h1>Rapport de vos réunions</h1>
-            </div>
-        </div>
-        {#End first row#}
+	{#Container#}
+	<div
+		class="container-fluid text-center">
+		{#First Row#}
+		<div class="row">
+			<div class="text-center col md-4 sm-3">
+				<h1>Rapport de vos réunions</h1>
+				<br>
+			</div>
+		</div>
+		{#End first row#}
 
-        {#Second row#}
-            <div class="row">
-            
-            </div>
+		{#Second row#}
+		<div class="row">
 
-        {#End seconf row#}
+			<div class="col-sm">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th>Libellé</th>
+							<th>Date</th>
+							<th>Heure</th>
+							<th>Salle</th>
+							<th>Liste de présence</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for m in meetings %}
+							<tr>
+								<td>{{m.name}}</td>
+								<td>{{m.date | date("m/d/Y")}}</td>
+
+								<td>{{m.beginning  | date("H:i:s")}}
+
+									-{{m.end | date("H:i:s") }}
+								</td>
+								<td>{{m.room}}</td>
+								<td>
+									<button type="button" class="btn btn-primary">Voir</button>
+								</td>
+
+							</tr>
+						{% endfor %}
+						{% for m in meeting %}
+							<tr>
+								<td>{{m1.name}}</td>
+								<td>{{m1.date | date("m/d/Y")}}</td>
+
+								<td>{{m1.beginning  | date("H:i:s")}}
+
+									-{{m1.end | date("H:i:s") }}
+								</td>
+								<td>{{m1.room}}</td>
+								<td>
+									<button type="button" class="btn btn-primary">Liste</button>
+								</td>
+
+							</tr>
+						{% endfor %}
 
 
-    </div>
-{#End container#}
+					</tbody>
 
-{% endblock %}
+
+				</tbody>
+			</table>
+
+		</div>
+		{#<div class="col-sm-3">
+					<select class="custom-select">
+						{% for m in meetings %}
+							<option value={{m.id}}>{{m.name}}</option>
+						{% endfor %}
+						{% for m1 in meeting %}
+							<option value={{m1.id}}>{{m1.name}}</option>
+						{% endfor %}
+					</select>
+				</div>#}
+
+
+	</div>
+
+	{#End seconf row#}
+
+
+</div>
+{#End container#}{% endblock %}

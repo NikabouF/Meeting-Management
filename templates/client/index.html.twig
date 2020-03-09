@@ -1,24 +1,3 @@
-{#{% extends 'base.html.twig' %}
-
-{% block title %}Meeting Management{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/PROJETS/OTR/Meeting/Meeting_management/src/Controller/ClientController.php'|file_link(0) }}">src/Controller/ClientController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/PROJETS/OTR/Meeting/Meeting_management/templates/client/index.html.twig'|file_link(0) }}">templates/client/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}#}
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -27,85 +6,70 @@
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
+	</head>
+	<body>
 		{% block stylesheets %}
 			<link rel="stylesheet" href='/css/bootstrap.css'/>
 		{% endblock %}
+		<div class="container"><br>
 
-		{% block navbar %}
+			<br><h2 class="text-warning text-center">Les réunions du jour</h2>
+			<hr style="width:35%"/><br><br>
+			<div class="row">
+				<table class="table table-striped">
+					<thead>
+						<tr class="text-center">
+							<th scope="col">Libellé de la réunion</th>
+							<th scope="col">Date</th>
+							<th scope="col">Heure</th>
+							<th scope="col">Salle</th>
+							<th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for m in meetings %}
+							{% for i in m.meeting %}
+								<tr class="text-center">
+									<td>{{i.name}}</td>
+									<td>{{i.date | date("m/d/Y")}}</td>
 
-            <div class="container">
-                </br></br>
-                <h2 class="text-warning text-center">Les réunions du jour</h2></br><hr></br>
-                <div class="row">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">N°</th>
-                                <th scope="col">Libellé de la réunion</th>
-                                <th scope="col">Heure de début</th>
-                                <th scope="col">Salle</th>
-                                <th scope="col">Signer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Réunion des stagiaires</td>
-                                <td>07:30</td>
-                                <td>Grande salle</td>
-                                <td class="form-group">
-                                    {#<button class="btn btn-primary">
-                                        <i class="fa fa-close"></i>Signer
-                                    </button>#}
-                                    <button class="btn btn-success">Signer</button>
-                                    <button class="btn btn-danger">Refuser</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>PréSentation de projets</td>
-                                <td>08:00</td>
-                                <td>Salle de conférence</td>
-                                <td
-                                    class="form-group">
-                                    <button class="btn btn-success">Signer</button>
-                                    <button class="btn btn-danger">Refuser</button>
-                                </td>
+									<td>{{i.beginning  | date("H:i:s")}}
+										-
+										{{i.end | date("H:i:s") }}
+									</td>
+									<td>{{i.room}}</td>
+									<td>
+										<button type="button" class="btn btn-primary" id="conf" data-id="{{i.id}}">Confirmer présence</button>
+									</td>
 
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Formation</td>
-                                <td>08:00</td>
-                                <td>Salle N°02</td>
-                                <td
-                                    class="form-group">
-                                    <button class="btn btn-success">Signer</button>
-                                    <button class="btn btn-danger">Refuser</button>
-                                </td>
+								</tr>
 
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-		{% endblock %}
-
-		{% block carousel %}{% endblock %}
-
-	</head>
-	<body>
-		{% block body %}{% endblock %}
-		{% block javascripts %}
-			<script src="/js/bootstrap.bundle.js"></script>
-			<script src="/js/bootstrap.min.js"></script>
-			<script src="/js/bootstrap.js"></script>
-			<script src="/js/bootstrap.bundle.min.js"></script>
-
-
-		{% endblock %}
+							{% endfor %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</body>
 </html>
+{% block javascripts %}
+	<script src="/js/jquery-3.4.1.js"></script>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+	<script>
+		$("#conf").click(function () {
+var id = $('#conf').data('id');
+Swal.fire('Any fool can use a computer');
+/*
+fetch('/check/' + id).then(function (response) {
+console.log(response.body)
+);
 
+if(response.body.text == 1) {
+Swal.fire('Any fool can use a computer');
+}
+}
+)*/
+});
+	</script>
+{% endblock %}{

@@ -1,105 +1,129 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReunionController!{% endblock %}
+{% block title %}Hello ReunionController!
+{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="container-fluid">
-	<h2 class="text-primary">Gestion des réunions</h2></br>
-    <div class="container">
-        <div class="card">
-            <div class="card-header bg-primary text-white" style="">
-                    Organiser une réunion
-            </div>
-            <div class="card-body">
-                <form>
-                    <div class="row">
-                                <div class="col">
-                                    <label for="libelle">Libellé de la réunion</label>
-                                    <input type="text" id="libelle" class="form-control" placeholder="Libellé">
-                                </div>
-                                <div class="col">
-                                    <label for="date_reunion">Date de la réunion</label>
-                                    <input type="date" id="date_reunion" class="form-control">
-                                </div>
-                            </div>
-                            </br>
-                            <div class="row">
-                                <div class="col">
-                                    <label for="heure_debut">Heure de début</label>
-                                    <input type="time" id="heure_debut" class="form-control">
-                                </div>
-                                <div class="col">
-                                    <label for="heure_fin">Heure de fin</label>
-                                    <input type="time" id="heure_fin" class="form-control">
-                                </div>
-                            </div>
-                            </br>
-                            <div class="row">
-                                <div class="col">
-                                    <label for="salle">Salle</label>
-                                    <input type="text" id="salle" class="form-control" placeholder="Salle N2">
-                                </div>
-                                <div class="col">
-                                    <label for="description">Description</label>
-                                    <input type="text" class="form-control" placeholder="Description">
-                                </div>
-                            </div></br>
-                            <div class="row">
-                                <div class="form-group">
-                                    <button type="cancel" class="btn btn-danger">Annuler</button>
-                                    <button type="submit" class="btn btn-success">Enregistrer</button>
-                                </div>
-                            </div>
-                </form>
-            </div>
-            <div class="card-footer">
-            </div>
-        </div>   
-    </div>
-    </br><hr>
-    <h2 class="text-success">Liste des réunions déjà organisées</h2></br>
-    <div class="container">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Libellé</th>
-                    <th>Date</th>
-                    <th>Heure</th>
-                    <th>Salle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Réunion des stagiaires</td>
-                    <td>20/01/2020</td>
-                    <td>08:00</td>
-                    <td>Salle N003</td>
-
-                </tr>
-                <tr>
-                    <td>Rencontre des responsables</td>
-                    <td>02/02/2020</td>
-                    <td>07:30</td>
-                    <td>Salle de réunion 2</td>
-                </tr>
-                <tr>
-                    <td>Présentation Agile</td>
-                    <td>04/03/2020</td>
-                    <td>08:00</td>
-                    <td>Salle informatique</td>
-                </tr>
-            </tbody>
-        </table>
-    </div></br>
-
-   
-
-</div>
-
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href='/css/bootstrap-multiselect.css'/>
 
 {% endblock %}
+{% block body %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+
+	<div class="container-fluid">
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<h2 class="text-primary">Gestion des réunions</h2>
+		<br/>
+		<div class="container">
+			<div class="card">
+				<div class="card-header bg-primary text-white" style="">
+					Organiser une réunion
+				</div>
+				<div class="card-body">
+					{{form_start(form)}}
+					<div class="row">
+						<div class="col">
+							<label for="libelle">Libellé de la réunion</label>
+							{{form_widget(form.name)}}
+						</div>
+						<div class="col">
+							<label for="date_reunion">Date de la réunion</label>
+							{{form_widget(form.date)}}
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col">
+							<label for="heure_debut">Heure de début</label>
+							{{form_widget(form.beginning)}}</div>
+
+						<div class="col">
+							<label for="heure_fin">Heure de fin</label>
+							{{form_widget(form.end)}}</div>
+					</div>
+					<br/>
+					<div class="row">
+						<div class="col">
+							<label for="salle">Salle</label>
+							{{form_widget(form.room)}}</div>
+						<div class="col">
+							<label for="description">Description</label>
+							{{form_widget(form.description)}}</div>
+					</div>
+					<br/>
+					<label for="description">
+						Choisissez les participants</label>
+
+					<select id="mySelect" multiple="multiple" name="select[]">
+						{% for p in participants %}
+							<option value={{p.id}}>{{p.name}}</option>
+						{% endfor %}
+					</select>
+					<br>
+					<br>
+
+					<div class="row">
+						<div class="form-group">
+							<button type="cancel" class="btn btn-danger">Annuler</button>
+							<button type="submit" class="btn btn-success">Enregistrer</button>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer"></div>
+			</div>
+		</div>
+		{{form_end(form)}}<br/><hr><h2 class="text-success">Liste des réunions déjà organisées</h2>
+		<br>
+		<div class="container">
+			<table class="table">
+				<thead class="thead-dark">
+					<tr>
+						<th>Libellé</th>
+						<th>Date</th>
+						<th>Heure</th>
+						<th>Salle</th>
+						<th>Participants</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for m in meetings %}
+						<tr>
+							<td>{{m.name}}</td>
+							<td>{{m.date | date("m/d/Y")}}</td>
+
+							<td>{{m.beginning  | date("H:i:s")}}
+
+								-{{m.end | date("H:i:s") }}
+							</td>
+							<td>{{m.room}}</td>
+							<td>
+								<button type="button" class="btn btn-primary">Liste</button>
+							</td>
+
+						</tr>
+					</tbody>
+
+				{% endfor %}
+
+			</tbody>
+		</table>
+	</div>
+</br></div>{% endblock %}{% block javascripts %}{{parent()}}<script src="/js/bootstrap-multiselect.js"></script><script>
+$('#mySelect').multiselect();</script>{% endblock %}

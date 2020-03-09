@@ -4,114 +4,106 @@
 {% endblock %}
 
 {% block body %}
-<style>
-	.example-wrapper {
-		margin: 1em auto;
-		max-width: 800px;
-		width: 95%;
-		font: 18px / 1.5 sans-serif;
-	}
-	.example-wrapper code {
-		background: #F5F5F5;
-		padding: 2px 6px;
-	}
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-{# Navigation bar for admin home page #}
+	{# Navigation bar for admin home page #}
 
-</br>
+	<br>
 
-<div class="container-fluid">
-    <h2>Gestion des participants</h2>
-</br>
-    <div class="row">
-        <div class="col md-2">
-            <div class="card">
-                <div class="card-header bg-primary text-white" style="">Ajouter un participant</div>
-                <div class="card-body">
-                    <form>
-                        <div class="row">
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="Nom">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="Prénom(s)">
-                            </div>
-                        </div></br>
-                        <div class="row">    
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="Adresse">
-                            </div>
-                            <div class="col">
-                                <input type="email" class="form-control" placeholder="Email">
-                            </div>
-                        </div></br>
-
-                        <div class="row">
-                            <div class="form-group">
-                                <button type="cancel" class="btn btn-danger">Annuler</button>
-                                <button type="submit" class="btn btn-success">Enregistrer</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col md-10">
-            <div class="container">
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom(s)</th>
-                            <th>Email</th>
-                            <th>Contacts</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>john@example.com</td>
-                            <td>22 20 20 20</td>
-
-                        </tr>
-                        <tr>
-                            <td>Mary</td>
-                            <td>Moe</td>
-                            <td>mary@example.com</td>
-                            <td>20 22 22 22</td>
-                        </tr>
-                        <tr>
-                            <td>July</td>
-                            <td>Dooley</td>
-                            <td>july@example.com</td>
-                            <td>21 20 22 20</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
-</div></br></br></br>
-	
-
-	{#Container#}
-<div class="progress">
-	<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 70%"></div>
-</div></br>
-
-<div class="container-fluid">
-    <div class="row">
-        
-    </div>
-</div></br></br>
+	<div class="container-fluid">
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+		<h2>Gestion des participants</h2>
+		<br>
+		<div class="row">
+			<div class="col md-2">
+				<div class="card">
+					<div class="card-header bg-primary text-white" style="">Ajouter un participant</div>
+					<div class="card-body">
+						{{form_start(form)}}
+						<div class="form-group">
+							<label for="exampleInputText">Nom
+							</label>
+							{{ form_widget(form.name) }}
+						</div>
+						<div class="form-group">
+							<label for="exampleInputText">Prenom(s)
+							</label>
+							{{ form_widget(form.firstname) }}
+						</div>
+						<div class="form-group">
+							<label for="exampleInputText">Adresse
+							</label>
+							{{ form_widget(form.address) }}
+						</div>
 
 
+						<div class="form-group">
+							<label for="exampleInputEmail1">Email
+							</label>
+							{{ form_widget(form.email) }}
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Mot de passe
+							</label>
+							{{ form_widget(form.plainPassword) }}</div>
 
+
+						<div class="row">
+							<div class="form-group">
+								<button type="cancel" class="btn btn-danger">Annuler</button>
+								<button type="submit" class="btn btn-success">Enregistrer</button>
+							</div>
+						</div>
+						{{form_end(form)}}
+					</div>
+					<div class="card-footer"></div>
+				</div>
+			</div>
+			<div class="col md-10">
+				<div class="container">
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th>Nom</th>
+								<th>Prénom(s)</th>
+								<th>Email</th>
+								<th>Adresse</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for m in participants %}
+								<tr>
+									<td>{{m.name}}</td>
+									<td>{{m.firstname }}</td>
+									<td>{{m.email}}</td>
+									<td>{{m.address}}</td>
+								</tr>
+
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div><br><br><br>{#Container#}<div class="progress">
+		<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 70%"></div>
+	</div><br><div class="container-fluid">
+		<div class="row"></div>
+	</div><br>
+	<br>
 {% endblock %}
