@@ -24,7 +24,7 @@ class ClientController extends AbstractController
         ]);
     }
     /**
-     * @Route("/check/{id}", name="check")
+     * @Route("/check/{id}/", name="check")
      */
     public function check(Request $request, $id, UserRepository $userRepository, MeetingRepository $meetingRepository)
     {
