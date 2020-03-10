@@ -28,6 +28,14 @@ class MeetingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findLast()
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
     public function findMeetingToday($date)
     {
         return $this->createQueryBuilder('m')
@@ -47,8 +55,79 @@ class MeetingRepository extends ServiceEntityRepository
             ->andWhere('u.id = :id')
             ->andWhere('u.date = :date')
             ->andWhere('m.admin = 0')
-            ->andWhere('m.present = 0')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findP($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.users', 'm')
+            ->addSelect('m')
+            ->andWhere('u.id = :id')
+            ->andWhere('m.admin = 0')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findParticipants($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.users', 'm')
+            ->addSelect('m')
+            ->andWhere('u.id = :id')
+            ->andWhere('m.admin = 0')
+            ->andWhere('m.present = 1')
+            ->andWhere('u.present = 1')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+    public function findIn($id, $date)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.users', 'm')
+            ->addSelect('m')
+            ->andWhere('u.id = :id')
+            ->andWhere('u.end >= :deb')
+            ->andWhere('u.beginning <= :fin')
+            ->andWhere('u.date = :date')
             ->setParameter('date', $date->format('Y-m-d'))
+            ->setParameter('deb', $date->format('H:i:s'))
+            ->setParameter('fin', $date->format('H:i:s'))
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findbefore($id, $date)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.users', 'm')
+            ->addSelect('m')
+            ->andWhere('u.id = :id')
+            ->andWhere('u.beginning > :fin')
+            ->andWhere('u.end > :fin')
+            ->andWhere('u.date = :date')
+            ->setParameter('date', $date->format('Y-m-d'))
+            ->setParameter('fin', $date->format('H:i:s'))
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findafter($id, $date)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.users', 'm')
+            ->addSelect('m')
+            ->andWhere('u.id = :id')
+            ->andWhere('u.end < :fin')
+            ->andWhere('u.date = :date')
+            ->setParameter('date', $date->format('Y-m-d'))
+            ->setParameter('fin', $date->format('H:i:s'))
             ->setParameter('id', $id)
             ->getQuery()
             ->getResult();

@@ -55,12 +55,13 @@
 								</td>
 								<td>{{m.room}}</td>
 								<td>
-									<button type="button" class="btn btn-primary">Voir</button>
+									<a name="" id="" class="btn btn-primary" href="{{ path('presence', {'id': m.id}) }}" role="button">Voir</a>
+
 								</td>
 
 							</tr>
 						{% endfor %}
-						{% for m in meeting %}
+						{% for m1 in meeting %}
 							<tr>
 								<td>{{m1.name}}</td>
 								<td>{{m1.date | date("m/d/Y")}}</td>
@@ -71,7 +72,8 @@
 								</td>
 								<td>{{m1.room}}</td>
 								<td>
-									<button type="button" class="btn btn-primary">Liste</button>
+									<a name="" id="" class="btn btn-primary" href="{{ path('presence', {'id': m1.id}) }}" role="button">Voir</a>
+
 								</td>
 
 							</tr>
@@ -86,15 +88,15 @@
 
 		</div>
 		{#<div class="col-sm-3">
-					<select class="custom-select">
-						{% for m in meetings %}
-							<option value={{m.id}}>{{m.name}}</option>
-						{% endfor %}
-						{% for m1 in meeting %}
-							<option value={{m1.id}}>{{m1.name}}</option>
-						{% endfor %}
-					</select>
-				</div>#}
+															<select class="custom-select">
+																{% for m in meetings %}
+																	<option value={{m.id}}>{{m.name}}</option>
+																{% endfor %}
+																{% for m1 in meeting %}
+																	<option value={{m1.id}}>{{m1.name}}</option>
+																{% endfor %}
+															</select>
+														</div>#}
 
 
 	</div>

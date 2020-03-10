@@ -6,6 +6,7 @@ use App\Entity\Meeting;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class MeetingType extends AbstractType
 {
@@ -15,7 +16,6 @@ class MeetingType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('beginning')
-            ->add('date')
             ->add('end')
             ->add('room');
     }

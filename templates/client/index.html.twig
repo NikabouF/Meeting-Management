@@ -15,6 +15,17 @@
 
 			<br><h2 class="text-warning text-center">Les réunions du jour</h2>
 			<hr style="width:35%"/><br><br>
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success">
+					{{ message }}
+				</div>
+			{% endfor %}
+			{% for message in app.flashes('error') %}
+				<div class="alert alert-danger">
+					{{ message }}
+				</div>
+			{% endfor %}
+
 			<div class="row">
 				<table class="table table-striped">
 					<thead>
@@ -31,7 +42,7 @@
 							{% for i in m.meeting %}
 								<tr class="text-center">
 									<td>{{i.name}}</td>
-									<td>{{i.date | date("m/d/Y")}}</td>
+									<td>{{i.date | date("d/m/Y")}}</td>
 
 									<td>{{i.beginning  | date("H:i:s")}}
 										-
@@ -39,7 +50,12 @@
 									</td>
 									<td>{{i.room}}</td>
 									<td>
-										<button type="button" class="btn btn-primary" id="conf" data-id="{{i.id}}">Confirmer présence</button>
+										{% if i.present == 1 and m.present == 1 %}
+											<a href="#" class="btn btn-success disabled" role="button">Présence confirmée</a>
+										{% else %}
+											<a name="conf" id="conf" class="btn btn-primary" href="{{ path('check', {'id': i.id, 'part': m.id}) }}" role="button">Confirmer Presence</a>
+										{% endif %}
+
 									</td>
 
 								</tr>
@@ -56,20 +72,18 @@
 	<script src="/js/jquery-3.4.1.js"></script>
 	<script src="/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-	<script>
-		$("#conf").click(function () {
+	<script>/*	$("#conf").click(function () {
 var id = $('#conf').data('id');
-Swal.fire('Any fool can use a computer');
-/*
-fetch('/check/' + id).then(function (response) {
-console.log(response.body)
-);
-
-if(response.body.text == 1) {
-Swal.fire('Any fool can use a computer');
+var part = $('#conf').data('idPart');
+$.ajax({
+type: 'GET',
+url: '/check/' + id + '/' + part,
+async: false,
+success: function (data) {},
+error: function () {
+alert('La requête n\'a pas abouti');
 }
-}
-)*/
 });
-	</script>
-{% endblock %}{
+});
+/*fetch('/check/' + id + '/' + part).then(function (response) {});
+});*/</script>{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Meeting;
 use App\Repository\MeetingRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,28 +17,31 @@ class RapportController extends AbstractController
      */
     public function index(MeetingRepository $meetingRepository)
     {
-        $p = $meetingRepository->findPart(new \DateTime('now'), 3);
         $date = new \DateTime();
-        dump($p);
         $meeting = $meetingRepository->findMeetingPast($date);
         $meeting1 = $meetingRepository->findMeetingToday($date);
         return $this->render('rapport/index.html.twig', [
             'controller_name' => 'RapportController',
             'meetings' => $meeting,
             'meeting' => $meeting1,
-            'participants' => $p
         ]);
     }
 
     /**
-     * @Route("/search/{id}", name="search")
+     * @Route("/rapport/{id}", name="presence")
      */
-    public function search(MeetingRepository $meetingRepository, $id)
+    public function search(MeetingRepository $meetingRepository, $id, UserRepository $userRepository)
     {
-        $p = $meetingRepository->findPart(new \DateTime('now'), $id);
-        return $this->render('rapport/index.html.twig', [
+        $p = $meetingRepository->findParticipants($id);
+        $m = $meetingRepository->findOneBy(
+            [
+                'id' => $id
+            ]
+        );
+        return $this->render('rapport/presences.html.twig', [
             'controller_name' => 'RapportController',
-            'participants' => $p
+            'participants' => $p,
+            'm' => $m
         ]);
     }
 }
